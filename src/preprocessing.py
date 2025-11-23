@@ -39,6 +39,18 @@ def remove_leakage(df):
             df = df.drop(columns=col)
     return df
 
+def handle_missing_values(df):
+
+    num_cols = df.select_dtypes(include=["int64", "float64"]).columns
+    for c in num_cols:
+        df[c] = df[c].fillna(df[c].median())
+
+
+    cat_cols = df.select_dtypes(include=["object"]).columns
+    for c in cat_cols:
+        df[c] = df[c].fillna("UNKNOWN")
+    return df
+
 def encode_categoricals(X):
     cat_cols = X.select_dtypes(include=["object"]).columns
     le = LabelEncoder()

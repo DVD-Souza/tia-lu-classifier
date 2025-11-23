@@ -3,6 +3,8 @@ import os
 from data import load_and_merge
 from preprocessing import clean_target, remove_leakage, handle_missing_values, encode_categoricals
 from model import train_and_evaluate
+from feature_selection import select_features
+
 sys.path.append(os.path.dirname(__file__))
 
 if __name__ == "__main__":
@@ -24,6 +26,11 @@ if __name__ == "__main__":
 
     # 6. Tratar variáveis categóricas
     X = encode_categoricals(X)
+
+    # 6. Feature selection (usa mesmo anti-leak do preprocessing)
+    selected_cols = select_features(X, y, n_features=10)
+
+    X = X[selected_cols]
 
     # 7. Treino, teste e avaliação
     train_and_evaluate(X, y)

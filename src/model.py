@@ -16,7 +16,7 @@ def train_and_evaluate(X, y):
     )
 
     model = DecisionTreeClassifier(
-        max_depth=6,
+        max_depth=12,
         min_samples_leaf=50,
         class_weight="balanced",
         random_state=42
